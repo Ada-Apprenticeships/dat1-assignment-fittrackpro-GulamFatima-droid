@@ -1,6 +1,8 @@
 -- Initial SQLite setup
-.open fittrackpro.db
-.mode column
+.open fittrackpro.sqlite
+.mode box
+
+PRAGMA foreign_keys = ON;
 
 -- Enable foreign key support
 

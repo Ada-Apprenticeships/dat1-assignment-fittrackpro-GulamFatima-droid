@@ -3,6 +3,21 @@
 
 PRAGMA foreign_keys = ON;
 
+DROP TABLE IF EXISTS locations;
+DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS staff;
+DROP TABLE IF EXISTS equipment;
+DROP TABLE IF EXISTS classes;
+DROP TABLE IF EXISTS class_schedule;
+DROP TABLE IF EXISTS memberships;
+DROP TABLE IF EXISTS attendance;
+DROP TABLE IF EXISTS class_attendance;
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS personal_training_sessions;
+DROP TABLE IF EXISTS member_health_metrics;
+DROP TABLE IF EXISTS equipment_maintenance_log;
+
+
 CREATE TABLE locations(
     location_id             INTEGER         PRIMARY KEY,
     name                    VARCHAR(255)    NOT NULL,
@@ -73,7 +88,7 @@ CREATE TABLE memberships (
     type                    VARCHAR(20)         CHECK (type IN ('Premium', 'Basic'))  NOT NULL,
     start_date              DATE                NOT NULL,
     end_date                DATE                CHECK (end_date > start_date)  NOT NULL,
-    status                  VARCHAR(10)         CHECK (type IN ('Active', 'Inactive'))  NOT NULL,
+    status                  VARCHAR(10)         CHECK (status IN ('Active', 'Inactive'))  NOT NULL,
     FOREIGN KEY(member_id) REFERENCES members(member_id)
 );
 
@@ -99,7 +114,7 @@ CREATE TABLE class_attendance (
 CREATE TABLE payments (
     payment_id              INTEGER             PRIMARY KEY,
     member_id               INTEGER             NOT NULL,
-    amount                  DECIMAL             ROUND(amount, 2)  NOT NULL,
+    amount                  REAL                CHECK (amount = ROUND(amount, 2))  NOT NULL,
     payment_date            VARCHAR(20)         NOT NULL,
     payment_method          VARCHAR(20)         CHECK (payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash'))  NOT NULL,
     payment_type            VARCHAR(40)         CHECK (payment_type IN ('Monthly membership fee', 'Day pass'))  NOT NULL,
@@ -113,7 +128,7 @@ CREATE TABLE personal_training_sessions (
     session_date            DATE                NOT NULL,
     start_time              VARCHAR(20)         NOT NULL,
     end_time                VARCHAR(20)         CHECK (end_time > start_time)  NOT NULL,
-    notes                   VARCHAR(255)        NOT NULL
+    notes                   VARCHAR(255)        NOT NULL,
     FOREIGN KEY(member_id) REFERENCES members(member_id),
     FOREIGN KEY(staff_id)  REFERENCES staff(staff_id)
 );
@@ -121,19 +136,19 @@ CREATE TABLE personal_training_sessions (
 CREATE TABLE member_health_metrics (
     metric_id               INTEGER             PRIMARY KEY,
     member_id               INTEGER             NOT NULL,
-    measurement_date        DATE                NOT NULL
-    weight                  DECIMAL             ROUND(weight, 1)  NOT NULL,
-    body_fat_percentage     DECIMAL             ROUND(body_fat_percentage, 1)  NOT NULL,
-    muscle_mass             DECIMAL             ROUND(muscle_mass, 1)  NOT NULL,
-    bmi                     DECIMAL             ROUND(bmi, 1)  NOT NULL,
+    measurement_date        DATE                NOT NULL,
+    weight                  REAL                CHECK (weight = ROUND(weight, 1))  NOT NULL,
+    body_fat_percentage     REAL                CHECK (body_fat_percentage = ROUND(body_fat_percentage, 1))  NOT NULL,
+    muscle_mass             REAL                CHECK (muscle_mass = ROUND(muscle_mass, 1))  NOT NULL,
+    bmi                     REAL                CHECK (bmi = ROUND(bmi, 1))  NOT NULL,
     FOREIGN KEY(member_id) REFERENCES members(member_id)
 );
 
 CREATE TABLE equipment_maintenance_log (
     log_id                  INTEGER             PRIMARY KEY,
     equipment_id            INTEGER             NOT NULL,
-    maintenance_date        DATE                NOT NULL
-    description             VARCHAR(255)        NOT NULL
+    maintenance_date        DATE                NOT NULL,
+    description             VARCHAR(255)        NOT NULL,
     staff_id                INTEGER             NOT NULL,
     FOREIGN KEY(equipment_id) REFERENCES equipment(equipment_id),
     FOREIGN KEY(staff_id)     REFERENCES staff(staff_id)
