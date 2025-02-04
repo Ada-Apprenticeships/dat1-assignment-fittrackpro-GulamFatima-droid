@@ -123,7 +123,7 @@ Create the following tables in your database. We have provided a file `schema.sq
 | ------------- | ---- |
 | membership_id |
 | member_id     |
-| type          |
+| type          | Premium, Basic
 | start_date    |
 | end_date      |
 | status        | Active, Inactive |
@@ -158,7 +158,7 @@ Create the following tables in your database. We have provided a file `schema.sq
 | member_id      |
 | amount         |
 | payment_date   |
-| payment_method | Credit Card, Bank Transfer, PayPal |
+| payment_method | Credit Card, Bank Transfer, PayPal, Cash |
 | payment_type   | Monthly membership fee, Day pass |
 
 
