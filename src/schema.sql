@@ -76,8 +76,8 @@ CREATE TABLE class_schedule (
     schedule_id             INTEGER             PRIMARY KEY,
     class_id                INTEGER             NOT NULL,
     staff_id                INTEGER             NOT NULL,
-    start_time              VARCHAR(20)         NOT NULL,
-    end_time                VARCHAR(20)         CHECK (end_time > start_time)  NOT NULL,
+    start_time              DATETIME            NOT NULL,
+    end_time                DATETIME            CHECK (end_time > start_time)  NOT NULL,
     FOREIGN KEY(class_id) REFERENCES classes(class_id),
     FOREIGN KEY(staff_id) REFERENCES staff(staff_id)
 );
@@ -96,8 +96,8 @@ CREATE TABLE attendance (
     attendance_id           INTEGER             PRIMARY KEY,
     member_id               INTEGER             NOT NULL,
     location_id             INTEGER             NOT NULL,
-    check_in_time           VARCHAR(20)         NOT NULL,
-    check_out_time          VARCHAR(20)         CHECK (check_out_time > check_in_time)  NOT NULL,
+    check_in_time           DATETIME            NOT NULL,
+    check_out_time          DATETIME            CHECK (check_out_time > check_in_time)  NOT NULL,
     FOREIGN KEY(member_id)   REFERENCES members(member_id),
     FOREIGN KEY(location_id) REFERENCES locations(location_id)
 );
@@ -115,7 +115,7 @@ CREATE TABLE payments (
     payment_id              INTEGER             PRIMARY KEY,
     member_id               INTEGER             NOT NULL,
     amount                  REAL                CHECK (amount = ROUND(amount, 2))  NOT NULL,
-    payment_date            VARCHAR(20)         NOT NULL,
+    payment_date            DATETIME            NOT NULL,
     payment_method          VARCHAR(20)         CHECK (payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash'))  NOT NULL,
     payment_type            VARCHAR(40)         CHECK (payment_type IN ('Monthly membership fee', 'Day pass'))  NOT NULL,
     FOREIGN KEY(member_id) REFERENCES members(member_id)

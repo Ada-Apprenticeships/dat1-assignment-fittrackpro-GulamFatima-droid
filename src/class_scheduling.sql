@@ -4,12 +4,17 @@
 
 PRAGMA foreign_keys = ON;
 
--- Enable foreign key support
-
 -- Class Scheduling Queries
 
 -- 1. List all classes with their instructors
--- TODO: Write a query to list all classes with their instructors
+
+WITH inst i AS 
+(
+    SELECT staff_id, first_name
+    FROM staff
+)
+
+SELECT 
 
 -- 2. Find available classes for a specific date
 -- TODO: Write a query to find available classes for a specific date
