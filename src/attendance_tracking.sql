@@ -41,4 +41,22 @@ ORDER BY visit_count DESC
 LIMIT 1;
 
 -- 4. Calculate the average daily attendance for each location
--- TODO: Write a query to calculate the average daily attendance for each location
+
+WITH counts AS (    
+    SELECT     
+        location_id,     
+        COUNT(DISTINCT strftime('%Y-%m-%d', check_in_time)) AS check_in_dates,    
+        COUNT(attendance_id) AS total_attendance    
+    FROM attendance 
+    GROUP BY location_id    
+),  
+data AS (  
+    SELECT   
+        l.name AS location_name,  
+        c.total_attendance / c.check_in_dates AS average_daily_attendance  
+    FROM counts c
+    LEFT JOIN locations l ON l.location_id = c.location_id  
+    GROUP BY l.name
+)    
+    
+SELECT * FROM data;    
