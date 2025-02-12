@@ -8,8 +8,8 @@ PRAGMA foreign_keys = ON;
 
 -- 1. Record a member's gym visit
 
--- INSERT INTO attendance (member_id, location_id, check_in_time, check_out_time)
--- VALUES (7, 1, DATETIME('now', 'localtime'), DATETIME('now', '+1.5 hours'));
+INSERT INTO attendance (member_id, location_id, check_in_time, check_out_time)
+VALUES (7, 1, DATETIME('now', 'localtime'), DATETIME('now', '+1.5 hours'));
 
 -- 2. Retrieve a member's attendance history
 SELECT  strftime('%Y-%m-%d', check_in_time) AS visit_date,  
