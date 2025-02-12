@@ -11,6 +11,7 @@ PRAGMA foreign_keys = ON;
 INSERT INTO attendance (member_id, location_id, check_in_time, check_out_time)
 VALUES (7, 1, DATETIME('now', 'localtime'), DATETIME('now', '+1.5 hours'));
 
+
 -- 2. Retrieve a member's attendance history
 SELECT  strftime('%Y-%m-%d', check_in_time) AS visit_date,  
         strftime('%H:%M:%S', check_in_time) AS check_in_time,
@@ -20,7 +21,8 @@ WHERE member_id = 5;
 
 -- 3. Find the busiest day of the week based on gym visits
 
-WITH data AS (
+WITH data AS 
+(
     SELECT attendance_id,
     CASE strftime('%w', check_in_time)  
         WHEN '0' THEN 'Sunday'  
@@ -42,21 +44,21 @@ LIMIT 1;
 
 -- 4. Calculate the average daily attendance for each location
 
-WITH counts AS (    
+WITH counts AS 
+(    
     SELECT     
         location_id,     
         COUNT(DISTINCT strftime('%Y-%m-%d', check_in_time)) AS check_in_dates,    
         COUNT(attendance_id) AS total_attendance    
     FROM attendance 
     GROUP BY location_id    
-),  
-data AS (  
-    SELECT   
-        l.name AS location_name,  
-        c.total_attendance / c.check_in_dates AS average_daily_attendance  
-    FROM counts c
-    LEFT JOIN locations l ON l.location_id = c.location_id  
-    GROUP BY l.name
-)    
+)
+
+ 
+SELECT l.name AS location_name, c.total_attendance / c.check_in_dates AS average_daily_attendance  
+FROM counts c
+LEFT JOIN locations l ON l.location_id = c.location_id  
+GROUP BY l.name;
+   
     
-SELECT * FROM data;    
+   

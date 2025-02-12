@@ -18,14 +18,11 @@ WITH trainers AS
     SELECT staff_id AS trainer_id, first_name AS trainer_name
     FROM staff
     WHERE position = 'Trainer'
-),
-counts AS
-(
-    SELECT trainer_id, trainer_name, COUNT(*) AS session_count
-    FROM personal_training_sessions, trainers
-    WHERE personal_training_sessions.staff_id = trainers.trainer_id 
-    AND session_date BETWEEN DATE('now') AND DATE('now', '+1 month')
-    GROUP BY trainer_id
 )
 
-SELECT * FROM counts;
+SELECT t.trainer_id, t.trainer_name, COUNT(*) AS session_count
+FROM personal_training_sessions p, trainers t
+WHERE p.staff_id = t.trainer_id 
+AND session_date BETWEEN DATE('now') AND DATE('now', '+1 month')
+GROUP BY trainer_id;
+

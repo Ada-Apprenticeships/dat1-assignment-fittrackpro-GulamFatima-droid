@@ -8,7 +8,7 @@ PRAGMA foreign_keys = ON;
 
 -- 1. List all active memberships
 
-SELECT m.member_id, m.first_name, m.last_name, me.type, m.join_date
+SELECT m.member_id, m.first_name, m.last_name, me.type AS membership_type, m.join_date
 FROM members m
 LEFT JOIN memberships me ON m.member_id = me.member_id
 WHERE me.status = 'Active';
@@ -42,9 +42,9 @@ result AS (
     FROM timeDiff t
 )
 
-SELECT r.type AS membership_type, AVG(r.timeSpent) AS avg_visit_duration_minutes
-FROM result r 
-GROUP BY r.type;
+SELECT type AS membership_type, AVG(timeSpent) AS avg_visit_duration_minutes
+FROM result  
+GROUP BY type;
 
 
 -- 3. Identify members with expiring memberships this year

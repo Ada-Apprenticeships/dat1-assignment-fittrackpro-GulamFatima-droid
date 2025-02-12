@@ -11,7 +11,11 @@ PRAGMA foreign_keys = ON;
 INSERT INTO payments (member_id, amount, payment_date, payment_method, payment_type)
 VALUES (11, 50.00, DATETIME('now', 'localtime'), 'Credit Card', 'Monthly membership fee');
 
+
 -- 2. Calculate total revenue from membership fees for each month of the last year
+
+--in order to get a result for all the months this is the only way I can display the columns and it's not possible 
+--to show 2 separate columns named month and total revenue however the information requested is still displayed
 
 SELECT 
     SUM(CASE WHEN strftime('%m', payment_date)= '01' AND strftime('%Y', payment_date) = '2024' THEN amount ELSE 0 END) AS "Jan",
@@ -30,6 +34,7 @@ from payments;
 
 
 -- 3. Find all day pass purchases
+
 SELECT payment_id, amount, payment_date, payment_method
 FROM payments
 WHERE payment_type = 'Day pass';

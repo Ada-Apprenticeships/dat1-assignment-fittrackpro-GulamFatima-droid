@@ -22,7 +22,7 @@ GROUP BY type;
 
 WITH data AS 
 (
-        SELECT equipment_id, type, JULIANDAY(DATE('now')) - JULIANDAY(purchase_date) AS daysDiff
+        SELECT type, JULIANDAY(DATE('now')) - JULIANDAY(purchase_date) AS daysDiff
         FROM equipment
 )
 

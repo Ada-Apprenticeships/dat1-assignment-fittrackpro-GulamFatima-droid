@@ -27,12 +27,14 @@ FROM members;
 
 -- 4. Find member with the most class registrations
 
-WITH memberReg AS (
+WITH memberReg AS 
+(
     SELECT m.member_id, m.first_name, m.last_name,   
     (  
         SELECT COUNT(*)  
         FROM class_attendance ca  
-        WHERE ca.attendance_status = 'Registered' AND ca.member_id = m.member_id  
+        WHERE ca.attendance_status = 'Registered' 
+        AND ca.member_id = m.member_id  
     )  AS registration_count
     FROM members m
 )
@@ -48,12 +50,14 @@ WHERE registration_count =
 
 -- 5. Find member with the least class registrations
 
-WITH memberReg AS (
+WITH memberReg AS 
+(
     SELECT m.member_id, m.first_name, m.last_name,   
     (  
         SELECT COUNT(*)  
         FROM class_attendance ca  
-        WHERE ca.attendance_status = 'Registered' AND ca.member_id = m.member_id  
+        WHERE ca.attendance_status = 'Registered' 
+        AND ca.member_id = m.member_id  
     )  
     AS registration_count
     FROM members m
@@ -70,7 +74,8 @@ WHERE registration_count =
 
 -- 6. Calculate the percentage of members who have attended at least one class
 
-WITH attendances AS (
+WITH attendances AS 
+(
     SELECT m.member_id, m.first_name, m.last_name,   
     (  
         SELECT COUNT(*)  
@@ -78,11 +83,11 @@ WITH attendances AS (
         WHERE ca.attendance_status = 'Attended' 
         AND ca.member_id = m.member_id  
     )  
-    AS attendance
+    AS attendance_count
     FROM members m
 )
 
 SELECT (COUNT(*) * 100 / (SELECT COUNT(*) FROM members)) AS percentage  
 FROM attendances
-WHERE attendance > 0;
+WHERE attendance_count > 0;
 
