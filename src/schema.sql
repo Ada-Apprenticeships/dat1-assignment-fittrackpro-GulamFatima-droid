@@ -88,7 +88,7 @@ CREATE TABLE memberships (
     type                    VARCHAR(20)         CHECK (type IN ('Premium', 'Basic'))  NOT NULL,
     start_date              DATE                CHECK (start_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')  NOT NULL,
     end_date                DATE                CHECK (end_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND end_date > start_date)  NOT NULL,
-    status                  VARCHAR(10)         CHECK (status IN ('Active', 'Inactive'))  NOT NULL,
+    status                  VARCHAR(20)         CHECK (status IN ('Active', 'Inactive'))  NOT NULL,
     FOREIGN KEY(member_id) REFERENCES members(member_id)
 );
 
@@ -97,7 +97,7 @@ CREATE TABLE attendance (
     member_id               INTEGER             NOT NULL,
     location_id             INTEGER             NOT NULL,
     check_in_time           DATETIME            CHECK (check_in_time GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]')  NOT NULL,
-    check_out_time          DATETIME            CHECK (check_OUT_time GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]' AND check_out_time > check_in_time)  NOT NULL,
+    check_out_time          DATETIME            CHECK (check_out_time GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]' AND check_out_time > check_in_time)  NOT NULL,
     FOREIGN KEY(member_id)   REFERENCES members(member_id),
     FOREIGN KEY(location_id) REFERENCES locations(location_id)
 );

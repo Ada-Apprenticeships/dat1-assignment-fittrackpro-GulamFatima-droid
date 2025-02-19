@@ -10,7 +10,7 @@ PRAGMA foreign_keys = ON;
 
 SELECT equipment_id, name, next_maintenance_date
 FROM equipment
-WHERE timediff('now', next_maintenance_date) LIKE '-0000-00-%';
+WHERE next_maintenance_date BETWEEN DATE('now') AND DATE('now', '+30 days');
 
 -- 2. Count equipment types in stock
 

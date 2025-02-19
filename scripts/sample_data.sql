@@ -1,5 +1,7 @@
+
+
 -- Sample data for locations
---changed opening hours by adding a 0 at the front to fit my checks
+--!!!! I have changed opening hours by adding a 0 at the front to fit my checks and if you are testing then you should do the same to your opening hours
 INSERT INTO locations (name, address, phone_number, email, opening_hours)
 VALUES 
 ('Downtown Fitness', '123 Main St, Cityville', '555-1234', 'downtown@fittrackpro.com', '06:00-22:00'),

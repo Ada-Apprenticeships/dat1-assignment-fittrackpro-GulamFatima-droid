@@ -62,7 +62,12 @@ LIMIT 3;
 
 WITH attendances AS 
 (
-    SELECT m.member_id, (SELECT COUNT(*) FROM class_attendance ca WHERE m.member_id = ca.member_id) AS noOfClasses
+    SELECT m.member_id, 
+    (
+        SELECT COUNT(*) 
+        FROM class_attendance ca 
+        WHERE m.member_id = ca.member_id
+    ) AS noOfClasses
     FROM members m
 )
 

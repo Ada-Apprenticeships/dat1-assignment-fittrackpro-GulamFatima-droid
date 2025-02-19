@@ -23,6 +23,6 @@ WITH trainers AS
 SELECT t.trainer_id, t.trainer_name, COUNT(*) AS session_count
 FROM personal_training_sessions p, trainers t
 WHERE p.staff_id = t.trainer_id 
-AND session_date BETWEEN DATE('now') AND DATE('now', '+1 month')
+AND session_date BETWEEN DATE('now') AND DATE('now', '+30 days')
 GROUP BY trainer_id;
 
